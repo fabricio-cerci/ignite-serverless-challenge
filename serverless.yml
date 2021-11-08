@@ -32,10 +32,17 @@ functions:
           path: /createTodo/{userid}
           method: POST
           cors: true
+  getTodo:
+    handler: src/functions/getTodo.handle
+    events:
+      - http:
+          path: /getTodo/{userid}
+          method: GET
+          cors: true
 
 resources:
   Resources:
-    dbCertificateUsers:
+    dbTodos:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: todos
@@ -45,6 +52,19 @@ resources:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
+          - AttributeName: user_id
+            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: UserIdIndex
+            KeySchema:
+              - AttributeName: user_id
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput: 
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
+
