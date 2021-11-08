@@ -8,5 +8,8 @@ jspm_packages
 # esbuild directories
 .esbuild
 
-# Dynamodb directory
+# Ignore webpack directories
+.webpack
+
+# Dynamodb directories
 .dynamodb
