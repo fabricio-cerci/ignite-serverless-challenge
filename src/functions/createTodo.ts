@@ -12,8 +12,6 @@ export const handle: APIGatewayProxyHandler = async (event) => {
   const { title, deadline } = JSON.parse(event.body) as ICreateTodo;
   const id = uuidV4();
 
-  console.log(new Date(deadline));
-
   await document.put({
     TableName: 'todos',
     Item: {
